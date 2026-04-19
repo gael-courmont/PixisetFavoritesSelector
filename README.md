@@ -10,7 +10,7 @@ A tool to copy into a new folder the photos that are selected by client in pixis
 | Windows  | [Download for Windows](https://github.com/gael-courmont/PixisetFavoritesSelector/releases/latest/download/PixiesetSelector.exe) |
 
 
-##On Mac
+## On Mac
 
 On Mac os you need to allow the app to run after trying to opening it once
 - go to System settings -> Privacy & Security -> Allow applications from
