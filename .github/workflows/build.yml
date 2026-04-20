@@ -21,7 +21,7 @@ jobs:
         run: pip install pyinstaller
 
       - name: Build
-        run: pyinstaller --onefile --windowed --name "PixiesetSelector" pixieset_selector.py
+        run: pyinstaller --onefile --windowed --noconsole --name "PixiesetSelector" --icon Icon.ico pixieset_selector.py
 
       - name: Upload to release
         uses: softprops/action-gh-release@v2
@@ -41,7 +41,7 @@ jobs:
         run: pip install pyinstaller
 
       - name: Build
-        run: pyinstaller --onefile --windowed --noconsole --name "PixiesetSelector" pixieset_selector.py
+        run: pyinstaller --onefile --windowed --noconsole --name "PixiesetSelector" --icon Icon.icns pixieset_selector.py
 
       - name: Zip it
         run: zip -j dist/PixiesetSelector-mac.zip dist/PixiesetSelector
