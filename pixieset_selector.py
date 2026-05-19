@@ -253,7 +253,7 @@ class App(tk.Tk):
         tokens = []
         for chunk in raw.replace("\n", ",").split(","):
             token = chunk.strip()
-            if token:
+            if token and token not in tokens:
                 tokens.append(token)
         return tokens
 
@@ -330,6 +330,8 @@ class App(tk.Tk):
             self.listbox.insert("end", f"  ✗  {name}")
             self.listbox.itemconfig("end", fg=DANGER)
 
+        print(self._matched)
+        print(self._missing)
         n_match, n_miss = len(self._matched), len(self._missing)
         self.lbl_stats.configure(
             text=f"{n_match + n_miss} requested  ·  {n_match} found  ·  {n_miss} missing",
