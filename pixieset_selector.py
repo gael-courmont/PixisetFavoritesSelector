@@ -154,14 +154,16 @@ class App(tk.Tk):
         tk.Label(left, text="Comma-separated from Pixieset, e.g.  photo-01, photo-02, photo-03",
                  font=FONT_HINT, fg=MUTED, bg=BG).pack(anchor="w")
 
+
         txt_frame = tk.Frame(left, bg=ACCENT, padx=1, pady=1)
         txt_frame.pack(fill="both", expand=True, pady=(6, 0))
         self.txt_names = tk.Text(
             txt_frame, bg=SURFACE, fg=TEXT, insertbackground=TEXT,
-            font=FONT_MONO, relief="flat", wrap="none",
+            font=FONT_MONO, relief="flat", wrap="word",
             selectbackground=ACCENT, selectforeground=TEXT,
-            padx=8, pady=8, width=1
+            padx=8, pady=8, width=1, undo=True
         )
+    
         sb = ttk.Scrollbar(txt_frame, command=self.txt_names.yview)
         self.txt_names.configure(yscrollcommand=sb.set)
         sb.pack(side="right", fill="y")
@@ -249,11 +251,16 @@ class App(tk.Tk):
         return export
 
     def _parse_names(self) -> list[str]:
-        raw = self.txt_names.get("1.0", "end").strip()
+        raw = self.txt_names.get("1.0", "end")
+        # normalize: replace all whitespace (newlines, tabs, spaces around commas)
+        # then split cleanly on commas
+        import re
         tokens = []
-        for chunk in raw.replace("\n", ",").split(","):
-            token = chunk.strip()
-            if token and token not in tokens:
+        seen = set()
+        for token in re.split(r'[\s,]+', raw):
+            token = token.strip()
+            if token and token not in seen:
+                seen.add(token)
                 tokens.append(token)
         return tokens
 
@@ -262,7 +269,7 @@ class App(tk.Tk):
     def _run_scan(self):
         names  = self._parse_names()
         folder = self.source_folder.get()
-
+        print(names)
         if not names:
             messagebox.showwarning("Nothing to search", "Please paste at least one filename.")
             return
