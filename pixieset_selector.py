@@ -22,6 +22,8 @@ BG        = "#edede9"   # main window background
 SURFACE   = "#d6ccc2"   # config strip, footer
 CARD      = "#f5ebe0"   # header, buttons, input backgrounds
 ACCENT    = "#d6ccc2"   # borders, hover, checkbutton highlight
+SELECT_BG = "#817F82"   # text selection background
+SELECT_FG = "#ffffff"   # text selection foreground
 
 # ── Buttons ──────────────────────────────────────────────────────────────────
 BTN_BG        = "#f5ebe0"   # button background
@@ -57,6 +59,7 @@ FONT_MONO    = ("Consolas", 14)           # paste area, folder paths, listbox
 
 def normalize(name: str) -> str:
     return Path(name.strip()).stem.lower()
+
 
 
 class App(tk.Tk):
@@ -160,7 +163,7 @@ class App(tk.Tk):
         self.txt_names = tk.Text(
             txt_frame, bg=SURFACE, fg=TEXT, insertbackground=TEXT,
             font=FONT_MONO, relief="flat", wrap="word",
-            selectbackground=ACCENT, selectforeground=TEXT,
+            selectbackground=SELECT_BG, selectforeground=SELECT_FG,
             padx=8, pady=8, width=1, undo=True
         )
     
@@ -269,7 +272,7 @@ class App(tk.Tk):
     def _run_scan(self):
         names  = self._parse_names()
         folder = self.source_folder.get()
-        print(names)
+
         if not names:
             messagebox.showwarning("Nothing to search", "Please paste at least one filename.")
             return
